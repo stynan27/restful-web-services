@@ -2,16 +2,23 @@ package com.seamus.rest.webservices.restfulwebservices.user;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 public class User {
 
 	private Integer id;
-	private String username;
+	
+	@Size(min=2, message = "Name should have at least 2 characters")
+	private String name;
+	
+	@Past(message = "Birthdate should be in the past")
 	private LocalDate birthdate;
 	
-	public User(Integer id, String username, LocalDate birthdate) {
+	public User(Integer id, String name, LocalDate birthdate) {
 		super();
 		this.id = id;
-		this.username = username;
+		this.name = name;
 		this.birthdate = birthdate;
 	}
 
@@ -24,11 +31,11 @@ public class User {
 	}
 
 	public String getUsername() {
-		return username;
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String name) {
+		this.name = name;
 	}
 
 	public LocalDate getBirthdate() {
@@ -41,6 +48,6 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "Users [id=" + id + ", username=" + username + ", birthdate=" + birthdate + "]";
+		return "Users [id=" + id + ", name=" + name + ", birthdate=" + birthdate + "]";
 	}
 }
