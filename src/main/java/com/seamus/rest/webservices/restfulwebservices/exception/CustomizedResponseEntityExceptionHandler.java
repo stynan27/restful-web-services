@@ -44,7 +44,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		//ex.getFieldErrorCount() -> get COUNT of all validation errors
 		
 		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), 
-				ex.getFieldError().getDefaultMessage(), request.getDescription(false));
+				"Total errors: " + ex.getErrorCount() + ", First Error: " + ex.getFieldError().getDefaultMessage(), request.getDescription(false));
 		
 		return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
 	}
