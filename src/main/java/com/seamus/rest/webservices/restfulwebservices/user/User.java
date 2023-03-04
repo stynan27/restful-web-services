@@ -30,11 +30,11 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
+	public String getName() {
 		return name;
 	}
 
-	public void setUsername(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
