@@ -14,6 +14,10 @@ import jakarta.validation.constraints.Size;
 @Entity(name = "user_details") // JPA to manage this Bean - rename to user_details
 public class User {
 
+	protected User() {
+		
+	}
+	
 	@Id
 	@GeneratedValue // generate this in the background
 	private Integer id;
