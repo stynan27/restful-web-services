@@ -25,25 +25,25 @@ import jakarta.validation.Valid;
 @RestController
 public class UserJpaResource {
 	
-	private UserRepository repository;
+	private UserRepository userRepository;
 	
 	private PostRepository postRepository;
 	
-	public UserJpaResource(UserRepository repository, PostRepository postRepository) {
-		this.repository = repository;
+	public UserJpaResource(UserRepository userRepository, PostRepository postRepository) {
+		this.userRepository = userRepository;
 		this.postRepository = postRepository;
 	}
 	
 	//GET /users
 	@GetMapping("/jpa/users")
 	public List<User> retrieveAllUsers(){
-		return repository.findAll();
+		return userRepository.findAll();
 	}
 	
 	//GET /users/1
 	@GetMapping("/jpa/users/{id}")
 	public EntityModel<User> retrieveUser(@PathVariable int id){
-		Optional<User> user = repository.findById(id); //service.findOne(id);
+		Optional<User> user = userRepository.findById(id); //service.findOne(id);
 		
 		// Formerly: catch null (no user) return and return a 404 Not Found Exception
 		// Now: Since we are now returning Optional type instead of User, use isEmpty()
@@ -63,7 +63,7 @@ public class UserJpaResource {
 	
 	@GetMapping("/jpa/users/{id}/posts")
 	public List<Post> retrievePostsForUser(@PathVariable int id){
-		Optional<User> user = repository.findById(id);
+		Optional<User> user = userRepository.findById(id);
 		
 		if (user.isEmpty()) 
 			throw new UserNotFoundException("id:"+id);
@@ -73,13 +73,13 @@ public class UserJpaResource {
 	
 	@DeleteMapping("/jpa/users/{id}")
 	public void deleteUser(@PathVariable int id){
-		repository.deleteById(id); // returns 200 on successful response
+		userRepository.deleteById(id); // returns 200 on successful response
 	}
 	
 	//POST /users
 	@PostMapping("/jpa/users")
 	public ResponseEntity<User> createUser(@Valid @RequestBody User user) { // @RequestBody to map body of a request to a User Bean
-		User savedUser = repository.save(user);
+		User savedUser = userRepository.save(user);
 		
 		// location of newly created resource (i.e. /users/4 => /users/{id})
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -93,7 +93,7 @@ public class UserJpaResource {
 	
 	@PostMapping("/jpa/users/{id}/posts")
 	public ResponseEntity<Post> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post){
-		Optional<User> user = repository.findById(id);
+		Optional<User> user = userRepository.findById(id);
 		
 		if (user.isEmpty()) 
 			throw new UserNotFoundException("id:"+id);
