@@ -71,6 +71,14 @@ public class User {
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 
 	@Override
 	public String toString() {
